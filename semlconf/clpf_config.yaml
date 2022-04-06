@@ -1,0 +1,65 @@
+seml:
+  executable: seml_train2.py
+  name: clpf
+  output_dir: logs
+  project_root_dir: ..
+
+slurm:
+  experiments_per_job: 1
+  sbatch_options:
+    gres: gpu:1       # num GPUs
+    mem: 4G          # memory
+    cpus-per-task: 1  # num cores
+    time: 0-08:00     # max time, D-HH:MM
+
+fixed:
+  args.data_dir: /nfs/homedirs/lui/neural-flow-for-sde/nfsde/experiments/data/synth
+  args.model: clpf
+  args.flow_model: resnet
+  args.flow_layers: 4
+  args.time_net: TimeFourier
+  args.time_hidden_dim: 8
+  args.activation: ReLU
+  args.seed: 1
+  args.data: ou
+  args.epochs: 100
+  args.lr: 1e-3
+  args.weight_decay: 1e-5
+  args.lr_scheduler_step: -1
+  args.lr_decay: 0.9
+  args.base_sde: brownian
+  args.batch_size: 100
+  args.clip: 1
+  args.hidden_layers: 2
+  args.hidden_dim: 128
+  args.hidden_state_dim: 16
+  args.w_dim: 0
+  args.z_dim: 20
+  args.initial_noise_size: 5
+  args.init_mult1: 1
+  args.init_mult2: 1
+  args.train_size: 0.7
+  args.val_size: 0.1
+  args.early_stop: True
+  args.patience: 10
+  args.iwae_train: 25
+  args.iwae_test: 25
+  args.train_base_sde: False
+  args.encoder_hidden_layers: 1
+  args.encoder_hidden_dim: 64
+  args.encoder_hidden_state_dim: 16
+  args.add_noise: False
+  args.mu: 0.
+  args.theta: 0.1
+  args.sigma: 1.
+  args.dt: 0.15625
+  args.dt_min: 0.15625
+  args.dt_min_test: 0.15625
+  args.time_embedding_dim: 3
+  args.noise_type: general
+  args.variance_act: softplus
+  args.method: euler
+  args.rtol: 1e-2
+  args.atol: 1e-2
+  args.adaptive: False
+

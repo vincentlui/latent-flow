@@ -1,0 +1,94 @@
+seml:
+  executable: seml_train2.py
+  name: flowmz
+  output_dir: logs
+  project_root_dir: ..
+
+slurm:
+  experiments_per_job: 1
+  sbatch_options:
+    gres: gpu:1       # num GPUs
+    mem: 4G          # memory
+    cpus-per-task: 1  # num cores
+    time: 0-04:00     # max time, D-HH:MM
+
+fixed:
+  args.data_dir: /nfs/homedirs/lui/neural-flow-for-sde/nfsde/experiments/data/synth
+  args.model: flow-mcz
+  args.flow_model: resnet
+  args.flow_layers: 4
+  args.time_net: TimeTanh
+  args.time_hidden_dim: 8
+  args.activation: ReLU
+  args.seed: 1
+#  args.data: ou
+  args.epochs: 500
+  args.lr: 1e-3
+  args.weight_decay: 1e-5
+  args.lr_scheduler_step: -1
+  args.lr_decay: 0.9
+  args.base_sde: ou
+  args.batch_size: 100
+  args.clip: 10
+  args.hidden_layers: 2
+  args.hidden_dim: 128
+  args.hidden_state_dim: 32
+  #args.w_dim: 1
+  #args.z_dim: 1
+  args.initial_noise_size: 5
+  args.init_mult1: 1
+#  args.init_mult2: 1
+  args.train_size: 0.7
+  args.val_size: 0.1
+  args.learn_std: False
+  args.early_stop: True
+  args.patience: 10
+  args.iwae_train: 25
+  args.iwae_test: 25
+  args.train_base_sde: False
+  args.encoder_hidden_layers: 2
+  args.encoder_hidden_dim: 128
+  args.encoder_hidden_state_dim: 64
+  args.kl_loss: True
+  args.add_noise: True
+  args.a: 1.
+  args.b: 1.
+  args.mu: 0.
+  args.theta: 0.1
+  args.sigma: 0.1
+  args.std_ema_factor: 0.98
+
+grid:
+  args.data:
+    type: choice
+    options:
+      - ou_nan
+
+random:
+  samples: 16
+
+  args.w_dim:
+    type: randint
+    seed: 1
+    max: 10
+    min: 1
+
+  args.z_dim:
+    type: randint
+    seed: 2
+    max: 3
+    min: 1
+
+  args.std_likelihood:
+    type: uniform
+    seed: 3
+    max: 1.
+    min: 0.01
+
+  args.init_mult2:
+    type: uniform
+    seed: 4
+    max: 20
+    min: 1
+
+

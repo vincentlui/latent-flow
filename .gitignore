@@ -1,0 +1,13 @@
+__pycache__
+.idea
+.vscode
+nfsde/result
+nfsde/experiments/data
+nfsde/lightning_logs
+.ipynb_checkpoints
+.ipynb
+.txt
+config.env
+.json
+result
+nfsde.egg-info

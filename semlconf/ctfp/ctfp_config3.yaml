@@ -1,0 +1,55 @@
+seml:
+  executable: seml_train2.py
+  name: ctfp
+  output_dir: logs
+  project_root_dir: ../..
+
+slurm:
+  experiments_per_job: 1
+  sbatch_options:
+    gres: gpu:1       # num GPUs
+    mem: 4G          # memory
+    cpus-per-task: 1  # num cores
+    time: 0-04:00     # max time, D-HH:MM
+
+fixed:
+  args.data_dir: /nfs/homedirs/lui/neural-flow-for-sde/nfsde/experiments/data/
+  args.model: ctfp
+  args.flow_model: coupling
+  args.flow_layers: 4
+  args.activation: Tanh
+#  args.seed: 1
+  args.data: baqd
+  args.epochs: 500
+  args.lr: 1e-3
+  args.weight_decay: 1e-5
+  args.lr_scheduler_step: 20
+  args.lr_decay: 0.9
+  args.base_sde: brownian
+  args.batch_size: 100
+  args.clip: 1
+  args.hidden_layers: 2
+  args.hidden_dim: 128
+  args.z_dim: 32
+  args.train_size: 0.6
+  args.val_size: 0.2
+  args.early_stop: True
+  args.patience: 10
+  args.iwae_train: 25
+  args.iwae_test: 50
+  args.encoder_hidden_layers: 2
+  args.encoder_hidden_dim: 128
+  args.encoder_hidden_state_dim: 32
+  args.add_noise: False
+  args.mu: 0.
+  args.theta: 0.1
+  args.sigma: 1.
+  args.optim: Adam
+
+grid:
+  args.seed:
+    type: choice
+    options:
+      - 111
+      - 222
+      - 333

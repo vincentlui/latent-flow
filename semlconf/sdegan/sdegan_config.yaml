@@ -1,0 +1,47 @@
+seml:
+  executable: seml_train2.py
+  name: sgan
+  output_dir: logs
+  project_root_dir: ../..
+
+slurm:
+  experiments_per_job: 1
+  sbatch_options:
+    gres: gpu:1       # num GPUs
+    mem: 4G          # memory
+    cpus-per-task: 1  # num cores
+    time: 0-08:00     # max time, D-HH:MM
+
+fixed:
+  args.data_dir: /nfs/homedirs/lui/neural-flow-for-sde/nfsde/experiments/data/synth
+  args.model: sde-gan
+#  args.seed: 2
+  args.data: ou2
+  args.epochs: 2000
+  args.clip: -1
+  args.g_lr: 1e-3
+  args.d_lr: 1e-3
+  args.weight_decay: 1e-2
+  args.batch_size: 1000
+  args.hidden_layers: 3
+  args.hidden_dim: 128
+  args.hidden_state_dim: 32
+  args.d_hidden_layers: 2
+  args.d_hidden_dim: 32
+  args.d_hidden_state_dim: 32
+  args.d_weight_clip: 10
+  args.initial_noise_size: 5
+  args.noise_size: 4
+  args.swa_step_start: 1000
+  args.init_mult1: 1
+  args.init_mult2: 1
+  args.train_size: 0.8
+  args.val_size: 0.05
+
+grid:
+  args.seed:
+    type: choice
+    options:
+      - 111
+      - 222
+      - 333

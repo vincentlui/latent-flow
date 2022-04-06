@@ -1,0 +1,61 @@
+seml:
+  executable: seml_train2.py
+  name: lsde
+  output_dir: logs
+  project_root_dir: ../..
+
+slurm:
+  experiments_per_job: 1
+  sbatch_options:
+    gres: gpu:1       # num GPUs
+    mem: 4G          # memory
+    cpus-per-task: 1  # num cores
+    time: 0-16:00     # max time, D-HH:MM
+
+fixed:
+  args.data_dir: /nfs/homedirs/lui/neural-flow-for-sde/nfsde/experiments/data/synth
+  args.model: latent-sde
+  args.activation: ReLU
+  #args.seed: 1
+  #args.data: ou
+  args.epochs: 300
+  args.lr: 1e-3
+  args.weight_decay: 1e-5
+  args.clip: -1
+  args.lr_scheduler_step: -1
+  args.lr_decay: 0.9
+  args.batch_size: 100
+  args.hidden_layers: 3
+  args.hidden_dim: 128
+  args.hidden_state_dim: 16
+  args.z_dim: 20
+#  args.initial_noise_size: 5
+  args.train_size: 0.6
+  args.val_size: 0.2
+  args.early_stop: True
+  args.patience: 10
+  args.iwae_train: 25
+  args.iwae_test: 50
+  args.encoder_hidden_layers: 2
+  args.encoder_hidden_dim: 64
+  args.encoder_hidden_state_dim: 32
+  args.add_noise: False
+  args.dt: 0.02
+  args.method: reversible_heun
+  args.adaptive: False
+
+grid:
+  args.data:
+    type: choice
+    options:
+      - ou
+      - logistic
+      - linear
+
+
+  args.seed:
+    type: choice
+    options:
+      - 111
+
+

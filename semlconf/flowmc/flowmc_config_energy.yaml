@@ -1,0 +1,71 @@
+seml:
+  executable: seml_train2.py
+  name: flowmc
+  output_dir: logs
+  project_root_dir: ../..
+
+slurm:
+  experiments_per_job: 1
+  sbatch_options:
+    gres: gpu:1       # num GPUs
+    mem: 4G          # memory
+    cpus-per-task: 1  # num cores
+    time: 0-04:00     # max time, D-HH:MM
+
+fixed:
+  args.data_dir: /nfs/homedirs/lui/neural-flow-for-sde/nfsde/experiments/data/
+  args.model: flow-mc
+  args.flow_model: resnet
+  args.flow_layers: 4
+  args.time_net: TimeFourier
+  args.time_hidden_dim: 8
+  args.activation: ReLU
+  #args.seed: 1
+#  args.data: ou
+  args.epochs: 1000
+  args.lr: 1e-3
+  args.weight_decay: 1e-5
+  args.lr_scheduler_step: 20
+  args.lr_decay: 0.9
+  args.base_sde: combine
+  args.batch_size: 100
+  args.clip: 1
+  args.hidden_layers: 2
+  args.hidden_dim: 128
+  args.hidden_state_dim: 16
+  args.w_dim: 10
+  args.z_dim: 0
+  #args.initial_noise_size: 5
+  args.init_mult1: 1
+  args.init_mult2: 1
+  args.train_size: 0.6
+  args.val_size: 0.2
+  args.learn_std: False
+  args.early_stop: True
+  args.patience: 10
+  args.iwae_train: 25
+  args.iwae_test: 50
+  args.train_base_sde: False
+  args.encoder_hidden_layers: 2
+  args.encoder_hidden_dim: 64
+  args.encoder_hidden_state_dim: 32
+  args.add_noise: True
+  args.mu: 0.
+  args.theta: 0.3
+  args.sigma: 0.5
+  args.posterior_model: CDE
+  args.flow_dim: 4
+  args.invertible: False
+
+grid:
+  args.data:
+    type: choice
+    options:
+      - energy
+
+  args.seed:
+    type: choice
+    options:
+      - 111
+      - 222
+      - 333

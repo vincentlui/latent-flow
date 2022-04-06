@@ -1,0 +1,61 @@
+seml:
+  executable: seml_train2.py
+  name: fgan
+  output_dir: logs
+  project_root_dir: ../..
+
+slurm:
+  experiments_per_job: 1
+  sbatch_options:
+    gres: gpu:1       # num GPUs
+    mem: 4G          # memory
+    cpus-per-task: 1  # num cores
+    time: 0-08:00     # max time, D-HH:MM
+
+fixed:
+  args.data_dir: /nfs/homedirs/lui/neural-flow-for-sde/nfsde/experiments/data/synth
+  args.model: flow-gan
+  args.flow_model: resnet
+  args.flow_layers: 4
+  args.time_net: TimeTanh
+  args.time_hidden_dim: 8
+  args.activation: LeakyReLU
+#  args.seed: 1
+  args.data: ou2
+  args.epochs: 2000
+  args.g_lr: 1e-3
+  args.d_lr: 1e-3
+  args.g_weight_decay: 1e-5
+  args.d_weight_decay: 1e-2
+  args.base_sde: brownian
+  args.batch_size: 1000
+  args.hidden_layers: 2
+  args.hidden_dim: 32
+  args.d_hidden_layers: 2
+  args.d_hidden_dim: 32
+  args.d_weight_clip: 10
+  args.initial_noise_size: 5
+  args.hidden_state_dim: 32
+  args.d_hidden_state_dim: 32
+  args.swa_step_start: 1000
+  args.w_dim: 10
+  args.z_dim: 4
+  args.theta: 0.3
+  args.sigma: 1.
+  args.d_model: CDE
+  args.init_mult1: 1
+  args.init_mult2: 1
+  args.update_g_every_n_iter: 1
+  args.joint_training: True
+  args.train_size: 0.8
+  args.val_size: 0.05
+  args.optim: Adadelta
+
+grid:
+  args.seed:
+    type: choice
+    options:
+      - 111
+      - 222
+      - 333
+
